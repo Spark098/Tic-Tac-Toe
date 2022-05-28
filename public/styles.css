@@ -1,0 +1,43 @@
+.board {
+    text-align: center;
+    display:grid;
+    grid-template-rows: repeat(3,100px);
+    grid-template-columns: repeat(3,100px);   
+    border: 3px solid black; 
+    /* align-items: center; */
+    justify-content: center;
+}
+
+div > p {
+    font-size: 38px;
+}
+.cell {
+    
+    /* margin: auto; */
+    /* background-color: aqua; */
+    row-gap: 10px;
+    column-gap: 10px;
+    border: 3px solid black;
+    text-align: center;
+    
+}
+
+#cell-0, #cell-1, #cell-2 {
+    border-top: none;
+}
+
+#cell-0, #cell-3, #cell-6 {
+    border-left: none;
+}
+
+#cell-6, #cell-7, #cell-8 {
+    border-bottom: none;
+}
+
+#cell-2, #cell-5, #cell-8 {
+    border-right: none;
+}
+
+
+
+
