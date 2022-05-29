@@ -10,16 +10,32 @@
 </head>
 
 <body>
-
-    <h1>Tic Tac Toe ....</h1>
-    <h2 class="player"></h2>
-    <h2 class="game-status"></h2>
     <div id="start-screen">
-        
+        <h1 style="margin-bottom: 50px;">Tic Tac Toe</h1>
+        <div id="new-game">
+            <h1>📌Create a new game</h1>
+            <input type="text" id="room-id" placeholder="Enter your room ID">
+            <button id="create-room-btn">Create</button>
+        </div>
+
+        <div id="join-game">
+            <h1>📌 Join a room</h1>
+            <input type="text" id="join-room-id" placeholder="Enter the room ID">
+            <button id="join-room-btn">Join</button>
+        </div>
+
+        <div id="display-error">
+
+        </div>
     </div>
+
     <div id="game-screen">
+        <h1 id="player"></h1>
+        <h1 id="game-notification">Winner</h1>
         <div class="board">
-            <div class="cell" id="cell-0" data-cell-index="0"><p>X</p></div>
+            <div class="cell" id="cell-0" data-cell-index="0">
+                <p>X</p>
+            </div>
             <div class="cell" id="cell-1" data-cell-index="1"></div>
             <div class="cell" id="cell-2" data-cell-index="2"></div>
             <div class="cell" id="cell-3" data-cell-index="3"></div>
@@ -27,10 +43,10 @@
             <div class="cell" id="cell-5" data-cell-index="5"></div>
             <div class="cell" id="cell-6" data-cell-index="6"></div>
             <div class="cell" id="cell-7" data-cell-index="7"></div>
-            <div class="cell" id="cell-8" data-cell-index="8"></div>    
+            <div class="cell" id="cell-8" data-cell-index="8"></div>
         </div>
     </div>
-    
+
     <script src="/socket.io/socket.io.js"></script>
     <!-- <script>
         var socket = io();

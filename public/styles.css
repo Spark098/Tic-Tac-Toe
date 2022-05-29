@@ -1,25 +1,41 @@
+
 .board {
     text-align: center;
     display:grid;
     grid-template-rows: repeat(3,100px);
     grid-template-columns: repeat(3,100px);   
-    border: 3px solid black; 
-    /* align-items: center; */
+    /* border: 3px solid black;  */
     justify-content: center;
+    margin-top: 70px
 }
 
+body > h1 {
+    text-align: center;
+    /* display: none; */
+}
+#start-screen {
+    display: none;
+    margin-top: 120px;
+    text-align: center;
+}
+#game-screen {
+    margin-top: 60px;
+    /* display: none; */
+}
+#display-error { 
+    margin-top: 50px;
+}
+
+#player, #game-notification {
+    text-align: center;
+}
 div > p {
     font-size: 38px;
 }
+
 .cell {
-    
-    /* margin: auto; */
-    /* background-color: aqua; */
-    row-gap: 10px;
-    column-gap: 10px;
     border: 3px solid black;
-    text-align: center;
-    
+    text-align: center;    
 }
 
 #cell-0, #cell-1, #cell-2 {
