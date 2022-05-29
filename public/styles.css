@@ -1,5 +1,5 @@
 
-.board {
+#board {
     text-align: center;
     display:grid;
     grid-template-rows: repeat(3,100px);
@@ -14,19 +14,20 @@ body > h1 {
     /* display: none; */
 }
 #start-screen {
-    display: none;
+    /* display: none; */
     margin-top: 120px;
     text-align: center;
+    /* display: none; */
 }
 #game-screen {
     margin-top: 60px;
-    /* display: none; */
+    display: none;
 }
 #display-error { 
     margin-top: 50px;
 }
 
-#player, #game-notification {
+#next-player, #game-notification {
     text-align: center;
 }
 div > p {
