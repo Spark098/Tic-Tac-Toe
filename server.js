@@ -25,26 +25,21 @@ io.on('connection', (socket) => {
       createRoom(roomId, socket.id);
       playerOneConnected = true;
       socket.emit("room-created", roomId);
-      // socket.emit("player-1-connected");
       socket.join(roomId);
     }
   })
 
 
   socket.on("join-room", roomId => {
-    if (!rooms[roomId]) {
-      socket.emit("display-error", "This room doesn't exist !!!");
+    if (!rooms[roomId] || !rooms[roomId][4]) {
+      socket.emit("display-error", "This room doesn't exist or room is already full");
     } else {
       userConnected(socket.id);
       joinRoom(roomId, socket.id);
       socket.join(roomId);
 
       socket.emit("room-joined", roomId);
-      // socket.emit("player-2-connected");
-      // socket.broadcast.to(roomId).emit("player-2-connected");
-      // initializeChoices(roomId);
       let playerAlreadyPresent = rooms[roomId][0];
-      // io.to(playerAlreadyPresent).emit('clear'); 
       io.to(playerAlreadyPresent).emit('whose-turn');
     }
   })
@@ -54,7 +49,7 @@ io.on('connection', (socket) => {
     const gameStates = rooms[rId][2];
     const whoseTurn = rooms[rId][3];
 
-    if (pId != whoseTurn) return;
+    if (pId != whoseTurn || rooms[rId][1] == "") return;
 
     if (gameStates[cno] != '') return;
     else {
@@ -98,7 +93,7 @@ function validateCell(rId, cno) {
       let loser = rooms[rId][pId - 1];
       // winning msg
       io.in(rId).emit('clear-whose-turn');
-      io.to(winner).emit('game-msg', "You've won !! 🎉🎉");
+      io.to(winner).emit('game-msg', "🎉🎉 You've won !! 🎉🎉");
       // losing msg
       io.to(loser).emit('game-msg', "You Lose");
       return;

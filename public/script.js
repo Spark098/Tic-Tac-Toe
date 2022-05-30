@@ -103,36 +103,3 @@ function handleAnyClick(event) {
   socket.emit('make-move', event.target.getAttribute('data-cell-index'), roomId, playerId);
 }
 
-// function validateCell() {
-//   const gameStatus = document.querySelector(".game-status");
-//   for (let i = 0; i < 7; i++) {
-//     let winningPos = winningPositions[i];
-//     let x = gameStates[winningPos[0]];
-//     let y = gameStates[winningPos[1]];
-//     let z = gameStates[winningPos[2]];
-
-//     if (x == "" || y == "" || z == "") continue;
-//     else if (x == y && y == z) {
-//       document.querySelector(".player").innerHTML = "";
-//       gameStatus.innerHTML = winningMsg();
-//       isGameActive = false;
-//       return;
-//     }
-//   }
-
-//   if (cellsRemaining == 0) {
-//     document.querySelector(".player").innerHTML = "";
-//     gameStatus.innerHTML = drawMsg();
-//     isGameActive = false;
-//     return;
-//   }
-
-//   // further moves can be played
-//   findNextPlayer();
-// }
-
-// function findNextPlayer() {
-//   currentPlayer = currentPlayer == "X" ? "O" : "X";
-//   document.querySelector(".player").innerHTML = playersTurn();
-//   return currentPlayer;
-// }
