@@ -29,7 +29,6 @@ document.querySelectorAll(".cell").forEach((cell) => {
 createRoomBtn.addEventListener('click', () => {
   let id = inputRoomId.value;
 
-  console.log(id);
   if (id == "") {
     displayError.style.display = 'block';
     displayError.innerHTML = "<h2>Please enter a valid room ID</h2>";
@@ -39,7 +38,7 @@ createRoomBtn.addEventListener('click', () => {
   }
 })
 
-joinRoomBtn.addEventListener("click", function(){
+joinRoomBtn.addEventListener("click", function () {
   let id = inputJoinId.value;
 
   // errorMessage.innerHTML = "";
@@ -58,7 +57,7 @@ socket.on("room-created", id => {
   startScreen.style.display = "none";
   gameScreen.style.display = "block";
 
-  nextPlayer.innerHTML='waiting for the other player to join ...'
+  nextPlayer.innerHTML = 'waiting for the other player to join ...'
 })
 
 socket.on("room-joined", id => {
@@ -74,64 +73,66 @@ socket.on("room-joined", id => {
   gameScreen.style.display = "block";
 })
 
-socket.on('reflect', attr => {
-  console.log(attr);
-  var sym = 'X';
-  document.querySelector(`[data-cell-index="${attr}"]`).innerHTML = `<p>${sym}</p>`;
+socket.on('mark-cell', (cno, pId) => {
+  var sym = pId == 1 ? 'X' : 'O';
+  document.querySelector(`[data-cell-index="${cno}"]`).innerHTML = `<p>${sym}</p>`;
 })
-socket.on('clear', ()=> {
-  console.log('Clearing the screen')
-  nextPlayer.innerHTML='';
-})
+// socket.on('clear', () => {
+//   console.log('Clearing the screen');
 
+
+// })
+socket.on('game-msg', msg => {
+  gameNtf.innerHTML = msg;
+})
+socket.on('game-is-tie', () => {
+  gameNtf.innerHTML = 'The game is tie !!';
+})
+socket.on('display-error', msg => {
+  displayError.style.display = 'block';
+  displayError.innerHTML = `<h2>${msg}</h2>`;
+})
+socket.on('whose-turn', () => {
+  nextPlayer.innerHTML = "It's your turn";
+})
+socket.on('clear-whose-turn', () => {
+  nextPlayer.innerHTML = "";
+})
 function handleAnyClick(event) {
-  // const cellNumber = parseInt(event.target.getAttribute("data-cell-index"));
-
-  // // Invalid Click or game is inactive
-  // if (gameStates[cellNumber] != "" || !isGameActive) return;
-
-  // mark the cell and validate
-  // event.target.innerHTML = currentPlayer;
-  // console.log(event.target.getAttribute('data-cell-index'));
-  // console.log(typeof event.target.getAttribute('data-cell-index'));
   console.log('Clicked')
-  
-  socket.emit('make-move', event.target.getAttribute('data-cell-index'), roomId);
-  // gameStates[cellNumber] = currentPlayer;
-  // cellsRemaining = cellsRemaining - 1;
-  // validateCell();
+  socket.emit('make-move', event.target.getAttribute('data-cell-index'), roomId, playerId);
 }
 
-function validateCell() {
-  const gameStatus = document.querySelector(".game-status");
-  for (let i = 0; i < 7; i++) {
-    let winningPos = winningPositions[i];
-    let x = gameStates[winningPos[0]];
-    let y = gameStates[winningPos[1]];
-    let z = gameStates[winningPos[2]];
+// function validateCell() {
+//   const gameStatus = document.querySelector(".game-status");
+//   for (let i = 0; i < 7; i++) {
+//     let winningPos = winningPositions[i];
+//     let x = gameStates[winningPos[0]];
+//     let y = gameStates[winningPos[1]];
+//     let z = gameStates[winningPos[2]];
 
-    if (x == "" || y == "" || z == "") continue;
-    else if (x == y && y == z) {
-      document.querySelector(".player").innerHTML = "";
-      gameStatus.innerHTML = winningMsg();
-      isGameActive = false;
-      return;
-    }
-  }
+//     if (x == "" || y == "" || z == "") continue;
+//     else if (x == y && y == z) {
+//       document.querySelector(".player").innerHTML = "";
+//       gameStatus.innerHTML = winningMsg();
+//       isGameActive = false;
+//       return;
+//     }
+//   }
 
-  if (cellsRemaining == 0) {
-    document.querySelector(".player").innerHTML = "";
-    gameStatus.innerHTML = drawMsg();
-    isGameActive = false;
-    return;
-  }
+//   if (cellsRemaining == 0) {
+//     document.querySelector(".player").innerHTML = "";
+//     gameStatus.innerHTML = drawMsg();
+//     isGameActive = false;
+//     return;
+//   }
 
-  // further moves can be played
-  findNextPlayer();
-}
+//   // further moves can be played
+//   findNextPlayer();
+// }
 
-function findNextPlayer() {
-  currentPlayer = currentPlayer == "X" ? "O" : "X";
-  document.querySelector(".player").innerHTML = playersTurn();
-  return currentPlayer;
-}
+// function findNextPlayer() {
+//   currentPlayer = currentPlayer == "X" ? "O" : "X";
+//   document.querySelector(".player").innerHTML = playersTurn();
+//   return currentPlayer;
+// }

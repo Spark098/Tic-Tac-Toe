@@ -1,7 +1,7 @@
 const rooms = {};
 
 const createRoom = (roomId, player1Id) => {
-    rooms[roomId] = [player1Id, "", ['', '', '', '', '', '', '', '', '']];
+    rooms[roomId] = [player1Id, "", ['', '', '', '', '', '', '', '', ''],1];
 }
 
 const joinRoom = (roomId, player2Id) => {
