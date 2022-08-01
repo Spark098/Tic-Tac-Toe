@@ -41,7 +41,6 @@ createRoomBtn.addEventListener('click', () => {
 joinRoomBtn.addEventListener("click", function () {
   let id = inputJoinId.value;
 
-  // errorMessage.innerHTML = "";
   displayError.style.display = "none";
 
   socket.emit("join-room", id);
@@ -57,7 +56,7 @@ socket.on("room-created", id => {
   startScreen.style.display = "none";
   gameScreen.style.display = "block";
 
-  nextPlayer.innerHTML = 'waiting for the other player to join ...'
+  nextPlayer.innerHTML = 'Waiting for the other player to join ...'
 })
 
 socket.on("room-joined", id => {
@@ -66,8 +65,6 @@ socket.on("room-joined", id => {
 
   playerOneConnected = true;
   playerTwoConnected = true;
-  // playerJoinTheGame(1);
-  // setWaitMessage(false);
 
   startScreen.style.display = "none";
   gameScreen.style.display = "block";
@@ -77,11 +74,9 @@ socket.on('mark-cell', (cno, pId) => {
   var sym = pId == 1 ? 'X' : 'O';
   document.querySelector(`[data-cell-index="${cno}"]`).innerHTML = `<p>${sym}</p>`;
 })
-// socket.on('clear', () => {
-//   console.log('Clearing the screen');
 
 
-// })
+
 socket.on('game-msg', msg => {
   gameNtf.innerHTML = msg;
 })
@@ -90,7 +85,7 @@ socket.on('game-is-tie', () => {
 })
 socket.on('display-error', msg => {
   displayError.style.display = 'block';
-  displayError.innerHTML = `<h2>${msg}</h2>`;
+  displayError.innerHTML = `<h2  style="font-family: Arial, Helvetica, sans-serif;">${msg}</h2>`;
 })
 socket.on('whose-turn', () => {
   nextPlayer.innerHTML = "It's your turn";

@@ -6,9 +6,8 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const port = process.env.PORT || 3000;
 
-const { userConnected, connectedUsers, initializeChoices, moves, makeMove, choices } = require("./utils/users");
+const { userConnected } = require("./utils/users");
 const { createRoom, joinRoom, destroyRoom, rooms } = require("./utils/rooms");
-const { pid } = require('process');
 
 app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
@@ -120,6 +119,7 @@ function validateCell(rId, cno) {
       io.to(winner).emit('game-msg', "🎉🎉 You've won !! 🎉🎉");
       // losing msg
       io.to(loser).emit('game-msg', "You Lose");
+      destroyRoom(rId);
       return;
     }
   }
@@ -128,6 +128,7 @@ function validateCell(rId, cno) {
   if (!roundDraw) {
     io.in(rId).emit('clear-whose-turn');
     io.in(rId).emit('game-is-tie');
+    destroyRoom(rId);
     return;
   }
 

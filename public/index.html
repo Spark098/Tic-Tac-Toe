@@ -6,32 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div id="start-screen">
         <h1 style="margin-bottom: 50px;">Tic Tac Toe</h1>
         <div id="new-game">
-            <h1>📌Create a new game</h1>
+            <h2>📌Create a new game</h2>
             <input type="text" id="room-id" placeholder="Enter your room ID">
             <button id="create-room-btn">Create</button>
         </div>
 
         <div id="join-game">
-            <h1>📌 Join a room</h1>
+            <h2>📌 Join a room</h2>
             <input type="text" id="join-room-id" placeholder="Enter the room ID">
             <button id="join-room-btn">Join</button>
         </div>
 
-        <div id="display-error">
+        <div id="display-error" style="background-color: red;  width: 50%; margin: auto">
         </div>
     </div>
 
     <div id="game-screen">
         <div id="game-messages">
-            <h1 id="next-player"></h1>
-            <h1 id="game-notification"></h1>
+            <h1 id="next-player" style="font-family: 'Source Code Pro', monospace;"></h1>
+            <h1 id="game-notification" style="font-family: 'Source Code Pro', monospace;"></h1>
         </div>
         <div id="board">
             <div class="cell" id="cell-0" data-cell-index="0"></div>
