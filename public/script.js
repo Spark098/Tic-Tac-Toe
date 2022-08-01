@@ -86,7 +86,7 @@ socket.on('game-msg', msg => {
   gameNtf.innerHTML = msg;
 })
 socket.on('game-is-tie', () => {
-  gameNtf.innerHTML = 'The game is tie !!';
+  gameNtf.innerHTML = 'It is a tie !!';
 })
 socket.on('display-error', msg => {
   displayError.style.display = 'block';
@@ -97,6 +97,11 @@ socket.on('whose-turn', () => {
 })
 socket.on('clear-whose-turn', () => {
   nextPlayer.innerHTML = "";
+})
+socket.on('player-disconnected', () => {
+  console.log('disconnect from client');
+  nextPlayer.innerHTML='The other player is disconnected. The game can not be continued';
+  
 })
 function handleAnyClick(event) {
   console.log('Clicked')

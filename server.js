@@ -7,7 +7,7 @@ const io = new Server(server);
 const port = process.env.PORT || 3000;
 
 const { userConnected, connectedUsers, initializeChoices, moves, makeMove, choices } = require("./utils/users");
-const { createRoom, joinRoom, exitRoom, rooms } = require("./utils/rooms");
+const { createRoom, joinRoom, destroyRoom, rooms } = require("./utils/rooms");
 const { pid } = require('process');
 
 app.use(express.static(__dirname + '/public'));
@@ -60,6 +60,30 @@ io.on('connection', (socket) => {
 
     validateCell(rId, cno);
   })
+
+  socket.on('disconnect', () => {
+    let pId, rId;
+    for (let id in rooms) {
+      if (rooms[id][0] === socket.id ||
+        rooms[id][1] === socket.id) {
+        if (rooms[id][0] === socket.id) {
+          pId = 1;
+        } else {
+          pId = 2;
+        }
+
+        rId = id;
+        console.log('disconnect-> ' + pId);
+        break;
+      }
+    }
+    if (pId === 1 && rooms[rId][1]!="") {
+      io.to(rooms[rId][1]).emit("player-disconnected");
+    } else if(pId === 2 && rooms[rId][0]!="") {
+      io.to(rooms[rId][0]).emit("player-disconnected");
+    }
+    destroyRoom(rId);
+  })
 });
 
 
@@ -84,10 +108,10 @@ function validateCell(rId, cno) {
 
     if (x == "" || y == "" || z == "") continue;
     else if (x == y && y == z) {
-      
+
       // winning 
       let pId = x == 'X' ? 1 : 2;
-      console.log('winner: '+ pId);
+      console.log('winner: ' + pId);
       let winner = rooms[rId][pId - 1];
       pId = pId == 1 ? 2 : 1;
       let loser = rooms[rId][pId - 1];
@@ -108,10 +132,10 @@ function validateCell(rId, cno) {
   }
 
   let currentPlayer = rooms[rId][3];
-  io.to(rooms[rId][currentPlayer-1]).emit('clear-whose-turn');
+  io.to(rooms[rId][currentPlayer - 1]).emit('clear-whose-turn');
   currentPlayer = currentPlayer == 1 ? 2 : 1;
   rooms[rId][3] = currentPlayer;
-  io.to(rooms[rId][currentPlayer-1]).emit('whose-turn');
+  io.to(rooms[rId][currentPlayer - 1]).emit('whose-turn');
 
   console.log(gameStates);
   console.log(currentPlayer);

@@ -6,16 +6,11 @@ const createRoom = (roomId, player1Id) => {
 
 const joinRoom = (roomId, player2Id) => {
     rooms[roomId][1] = player2Id;
-    rooms[roomId][4]=false;
+    rooms[roomId][4] = false;
 }
 
-const exitRoom = (roomId, player) => {
-    if (player === 1) {
-        delete rooms[roomId];
-    }
-    else {
-        rooms[roomId][1] = "";
-    }
+const destroyRoom = (roomId) => {
+    delete rooms[roomId];
 }
 
-module.exports = { rooms, createRoom, joinRoom, exitRoom };
+module.exports = { rooms, createRoom, joinRoom, destroyRoom };
