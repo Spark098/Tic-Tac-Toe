@@ -96,3 +96,7 @@ button:hover {
 input {
     padding:  6px; 
 }
+
+#join-room-btn {
+    width:89px;
+}
